@@ -1,14 +1,18 @@
-import { RoutesModule } from './routes/routes.module';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from './shared/shared.module';
-import { LayoutModule } from './layout/layout.module';
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { AuthModule } from 'app/services/auth/auth.module';
+import { BASE_PATH } from 'app/shared/backend-api/sbshop';
+import { environment } from 'environments/environment';
 
 import { AppComponent } from './app.component';
-import { AuthModule } from 'app/services/auth/auth.module';
+import { LayoutModule } from './layout/layout.module';
+import { SharedModule } from './shared/shared.module';
+import { RoutesModule } from 'app/routes/routes.module';
+import { RoutesRoutingModule } from 'app/routes/routes-routing.module';
+
 
 @NgModule({
   declarations: [
@@ -22,9 +26,10 @@ import { AuthModule } from 'app/services/auth/auth.module';
     LayoutModule,
     CommonModule,
     SharedModule,
-    RoutesModule
   ],
-  providers: [],
+  providers: [
+    { provide: BASE_PATH, useValue: environment.apiBaseUrl },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
