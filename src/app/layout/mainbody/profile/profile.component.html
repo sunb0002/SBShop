@@ -1,14 +1,54 @@
-<h1>profile works!</h1>
+<h1>Welcome to Profile Management Page!</h1>
 
-<div class="col-md-12">
+<div class="col-md-6">
     <div class="collapse-box">
         <div class="collapse-title name">
-            Title here
+            <button type="button" class="btn btn-danger" (click)="displayAllUsers()">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Get All Users
+                </button>
         </div>
-        <div id="profile1" class="collapse in">
-            Profile here
+
+        <div class="collapse in">
+            <input type="text" maxlength="50" class="form-control" placeholder="Enter user's name" [formControl]="nameSearchCtrl">
+            <button type="button" class="btn btn-danger" (click)="searchByName()" [disabled]="nameSearchCtrl.invalid">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Search by Name
+                </button>
+        </div>
+        <div id="displaying-users">
+            <li *ngFor="let user of displayUsers">
+                ID:{{user.userId}}, NAME:{{user.name}}, NRIC:{{user.nric}},
+                <a href="javascript:void(0);" (click)="editProfile=user"><b>Edit</b></a>
+            </li>
         </div>
     </div>
 </div>
+<div class="col-md-6">
+    <div class="collapse-box">
+        <div class="collapse-title name">
+            <form [formGroup]="FG">
+                <div>
+                    <b>User ID</b>: {{editProfile.userId}}
+                </div>
+                <div [class.has-error]="nameCtrl.dirty && nameCtrl.invalid">
+                    <b>User Name</b>:
+                    <input [(ngModel)]="editProfile.name" type="text" maxlength="50" class="form-control" placeholder="Enter Name" formControlName="nameCtrl">
+                    <span class="help-block" *ngIf="nameCtrl.dirty && nameCtrl.invalid">Name is mandatory</span>
+                </div>
+                <div [class.has-error]="nricCtrl.dirty && nricCtrl.invalid">
+                    <b>User NRIC</b>:
+                    <input [(ngModel)]="editProfile.nric" type="text" maxlength="9" class="form-control" placeholder="Enter NRIC" formControlName="nricCtrl">
+                    <span class="help-block" *ngIf="nricCtrl.dirty && nricCtrl.invalid">Please enter valid NRIC</span>
+                </div>
+            </form>
+        </div>
+        <button type="button" class="btn" [ngClass]="isCreateNewUser()?'btn-success':'btn-info'" (click)="updateEditUser()" [disabled]="FG.invalid">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            {{isCreateNewUser()?'Create New User':'Edit Existing User'}}
+        </button>
+        <button *ngIf="!isCreateNewUser()" type="button" class="btn btn-success" (click)="initEditProfile()">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Clear
+        </button>
+    </div>
+</div>
 
-<button type="button" class="btn btn-danger" (click)="addToCart()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add to Cart</button>
+<simple-notifications [options]="notificationOptions"></simple-notifications>

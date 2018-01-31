@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { AuthModule } from 'app/services/auth/auth.module';
@@ -19,7 +18,6 @@ import { SharedModule } from './shared/shared.module';
   ],
   imports: [
     BrowserModule,
-    FormsModule,
     HttpModule,
     AuthModule,
     LayoutModule,
