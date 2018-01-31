@@ -41,11 +41,26 @@ export class ProfileApi {
     }
 
     /**
+     * getAllUsers
+     * Get all users
+     */
+    public getAllUsersUsingGET(extraHttpRequestParams?: any): Observable<models.ProfileResponseUserList> {
+        return this.getAllUsersUsingGETWithHttpInfo(extraHttpRequestParams)
+            .map((response: Response) => {
+                if (response.status === 204) {
+                    return undefined;
+                } else {
+                    return response.json();
+                }
+            });
+    }
+
+    /**
      * getUserById
      * Get User by Id
      * @param id id
      */
-    public getUserByIdUsingGET(id: number, extraHttpRequestParams?: any): Observable<models.User> {
+    public getUserByIdUsingGET(id: number, extraHttpRequestParams?: any): Observable<models.ProfileResponseUser> {
         return this.getUserByIdUsingGETWithHttpInfo(id, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -61,7 +76,7 @@ export class ProfileApi {
      * Create or update user profile
      * @param userDto Request body to save user profile.
      */
-    public saveUserProfileUsingPOST(userDto: models.UserDTO, extraHttpRequestParams?: any): Observable<models.User> {
+    public saveUserProfileUsingPOST(userDto: models.UserDTO, extraHttpRequestParams?: any): Observable<models.ProfileResponseUser> {
         return this.saveUserProfileUsingPOSTWithHttpInfo(userDto, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -77,7 +92,7 @@ export class ProfileApi {
      * Search Users with name
      * @param name name
      */
-    public searchUsersByNameUsingGET(name: string, extraHttpRequestParams?: any): Observable<models.User> {
+    public searchUsersByNameUsingGET(name: string, extraHttpRequestParams?: any): Observable<models.ProfileResponseUserList> {
         return this.searchUsersByNameUsingGETWithHttpInfo(name, extraHttpRequestParams)
             .map((response: Response) => {
                 if (response.status === 204) {
@@ -88,6 +103,40 @@ export class ProfileApi {
             });
     }
 
+
+    /**
+     * getAllUsers
+     * Get all users
+     */
+    public getAllUsersUsingGETWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
+        const path = this.basePath + '/profile/allusers';
+
+        let queryParameters = new URLSearchParams();
+        let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+
+        // to determine the Accept header
+        let produces: string[] = [
+            '*/*'
+        ];
+
+        let requestOptions: RequestOptionsArgs = new RequestOptions({
+            method: RequestMethod.Get,
+            headers: headers,
+            search: queryParameters,
+            withCredentials:true
+        });
+
+        // https://github.com/swagger-api/swagger-codegen/issues/4037
+        if (extraHttpRequestParams) {
+            requestOptions = (<any>Object).assign(requestOptions, extraHttpRequestParams);
+        }
+
+        return this.http.request(path, requestOptions);
+    }
 
     /**
      * getUserById

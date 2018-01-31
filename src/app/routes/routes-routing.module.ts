@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: 'dashboard', pathMatch: 'full', component: CarouselComponent },
   { path: 'profile', pathMatch: 'full', component: ProfileComponent },
   { path: 'error', pathMatch: 'full', component: ErrorComponent },
-  { path: '**', redirectTo: 'dashboard' },
+  { path: '**', redirectTo: 'error' },
 ];
 
 @NgModule({

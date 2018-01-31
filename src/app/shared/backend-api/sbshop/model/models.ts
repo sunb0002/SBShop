@@ -1,3 +1,4 @@
 export * from './HomeResponse';
-export * from './User';
+export * from './ProfileResponseUser';
+export * from './ProfileResponseUserList';
 export * from './UserDTO';
