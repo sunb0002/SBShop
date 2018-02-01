@@ -51,13 +51,14 @@ export class ProfileComponent {
     const nameSearchVal = this.FG.get('nameSearchCtrl').value;
     this.profileSvc.searchUserByName(nameSearchVal).subscribe(
       data => this.displayUsers = data,
-      error => this.notificationSvc.error('Profile', error.json()['msg'])
+      error => this.notifyError(error)
     );
   }
 
   displayAllUsers(): void {
     this.profileSvc.getAllUsers().subscribe(
-      data => this.displayUsers = this.profileSvc.allUsers
+      data => this.displayUsers = this.profileSvc.allUsers,
+      error => this.notifyError(error)
     );
   }
 
@@ -67,8 +68,13 @@ export class ProfileComponent {
       .finally(() => this.isDataLoading = false)
       .subscribe(
       data => this.notificationSvc.success('Profile', 'Profile has been saved successfully.'),
-      error => this.notificationSvc.error('Profile', error.json()['msg'])
+      error => this.notifyError(error)
       );
+  }
+
+  private notifyError(err: Response): void {
+    console.error('Error occurred: ', err);
+    this.notificationSvc.error('Profile', err.json()['msg'] || Constants.generalErrorMsg);
   }
 
 }

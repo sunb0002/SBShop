@@ -7,11 +7,11 @@ import { environment } from '../../src/environments/environment';
 export class SBSHOPLogisticsPage {
 
   public SBSHOPPageBaseHref = '/#';
-  public SBSHOPApiBaseURL = environment.SBSHOP_API.BASE_PATH;
+  public SBSHOPApiBaseURL = environment.apiBaseUrl;
   public defaultSBSHOPUser = 'S2222222D';
-  public defaultSBSHOPLogisticsGroup = 'ESERVICE-ADMIN-INTRANET';
-  public defaultSBSHOPStoreGroup = 'PORTAL-SCDF_NSFS-INTERNET';
-  public defaultSBSHOPLoginType = 'SINGPASS';
+  public defaultSBSHOPLogisticsGroup = 'PORTAL-LOGISTICS';
+  public defaultSBSHOPStoreGroup = 'PORTAL-STORE';
+  public defaultSBSHOPLoginType = 'SBPASS';
 
   defaultVisibilityTimeout = 3000;
   defaultVisibilityTimeoutMsg = 'Taking too long to display (or hide) element.';
@@ -49,8 +49,8 @@ export class SBSHOPLogisticsPage {
     this.navigateToPath(this.SBSHOPApiBaseURL);
     browser.manage().deleteAllCookies();
     return Promise.all([
-      this.setCookie('iv-user', ivUser),
-      this.setCookie('iv-groups', ivGroup),
+      this.setCookie('sb-user', ivUser),
+      this.setCookie('sb-groups', ivGroup),
       this.setCookie('logintype', loginType)
     ]);
   }
@@ -121,6 +121,32 @@ export class SBSHOPLogisticsPage {
     await browser.executeScript('window.scrollTo(0,10000);');
   }
 
+  async forceElementCheckedStatus(elm: ElementFinder, clickTarget: ElementFinder, toChecked: boolean): Promise<void> {
+    if (await elm.isPresent() && await clickTarget.isDisplayed()) {
+      const currentStatus = (await elm.getAttribute('checked') === 'true');
+      if (toChecked !== currentStatus) {
+        await clickTarget.click();
+      }
+    }
+  }
+
+  async locateElementByTraversePaginations(elm: ElementFinder, nextBtn: ElementFinder): Promise<boolean> {
+    let nextBtnDisabled: Boolean = false;
+    let elmFound: boolean;
+    do {
+      await this.awaitBootStrapModalVisibility(false);
+      await this.awaitVisibility(nextBtn);
+      elmFound = (await elm.isPresent());
+      nextBtnDisabled = (await nextBtn.getAttribute('disabled') != null); // .isEnabled() is not working
+      if (!elmFound && !nextBtnDisabled) {
+        await nextBtn.click();
+        await browser.waitForAngular();
+      }
+    } while (!elmFound && !nextBtnDisabled);
+
+    return elmFound;
+  }
+
   async countElementsByTraversePaginations(elmArray: ElementArrayFinder, nextBtn: ElementFinder): Promise<number> {
 
     let sum = 0;
@@ -169,9 +195,12 @@ export class SBSHOPLogisticsPage {
       .send(postbody)
       .timeout(this.defaultHttpRequestTimeout)
       .then(
-      resp => resp.body,
+      resp => {
+        console.log('>>>>>> Responded: ', resp.body)
+        return resp.body;
+      },
       err => {
-        console.log('Request Failed: ', err);
+        console.log('>>>>>> Request Failed: ', err);
         return null;
       }
       );
