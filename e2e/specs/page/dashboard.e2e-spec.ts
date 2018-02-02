@@ -21,5 +21,8 @@ describe('DASHBOARD page:', () => {
         expect(await allProdImgs.count()).toBeGreaterThanOrEqual(5);
     });
 
+    it('should display copyright', async () => {
+        expect(await page.getCopyRight().isPresent()).toBeTruthy();
+    });
 
 });
