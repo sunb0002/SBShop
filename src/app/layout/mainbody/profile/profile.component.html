@@ -41,7 +41,7 @@
                 </div>
             </form>
         </div>
-        <button type="button" class="btn" [ngClass]="isCreateNewUser()?'btn-success':'btn-info'" (click)="updateEditUser()" [disabled]="FG.invalid">
+        <button type="button" class="btn" [ngClass]="isCreateNewUser()?'btn-success':'btn-info'" (click)="updateEditUser()" [disabled]="FG.invalid || isDataLoading">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             {{isCreateNewUser()?'Create New User':'Edit Existing User'}}
         </button>

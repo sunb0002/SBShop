@@ -121,7 +121,7 @@ export class InternalApi {
      * Get successful message
      */
     public allHailUsingGETWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/json200';
+        const path = this.basePath + '/home/json200';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -155,7 +155,7 @@ export class InternalApi {
      * Get unsuccessful message
      */
     public test403UsingGETWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/json403';
+        const path = this.basePath + '/home/json403';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -189,7 +189,7 @@ export class InternalApi {
      * Test anything
      */
     public testAnythingUsingGETWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/json200MK2';
+        const path = this.basePath + '/home/json200MK2';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -223,7 +223,7 @@ export class InternalApi {
      * Test Message Queue
      */
     public testMQUsingGETWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/json200MQ';
+        const path = this.basePath + '/home/json200MQ';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845
@@ -257,7 +257,7 @@ export class InternalApi {
      * Test sending email
      */
     public testMailUsingGETWithHttpInfo(extraHttpRequestParams?: any): Observable<Response> {
-        const path = this.basePath + '/json200Mail';
+        const path = this.basePath + '/home/json200Mail';
 
         let queryParameters = new URLSearchParams();
         let headers = new Headers(this.defaultHeaders.toJSON()); // https://github.com/angular/angular/issues/6845

@@ -48,7 +48,7 @@ export class ProfileComponent {
   }
 
   searchByName(): void {
-    const nameSearchVal = this.FG.get('nameSearchCtrl').value;
+    const nameSearchVal = this.nameSearchCtrl.value;
     this.profileSvc.searchUserByName(nameSearchVal).subscribe(
       data => this.displayUsers = data,
       error => this.notifyError(error)
@@ -67,8 +67,13 @@ export class ProfileComponent {
     this.profileSvc.updateUser(this.editProfile)
       .finally(() => this.isDataLoading = false)
       .subscribe(
-      data => this.notificationSvc.success('Profile', 'Profile has been saved successfully.'),
-      error => this.notifyError(error)
+        data => {
+          if (this.isCreateNewUser()) {
+            this.initEditProfile();
+          }
+          this.notificationSvc.success('Profile', 'Profile has been saved successfully.');
+        },
+        error => this.notifyError(error)
       );
   }
 
