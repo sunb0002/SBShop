@@ -4,20 +4,22 @@
     <div class="collapse-box">
         <div class="collapse-title name">
             <button type="button" class="btn btn-danger" (click)="displayAllUsers()">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Get All Users
-                </button>
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Get All Users
+            </button>
         </div>
 
         <div class="collapse in">
-            <input type="text" maxlength="50" class="form-control" placeholder="Enter user's name" [formControl]="nameSearchCtrl">
+            <input id="nameSearchBox" type="text" maxlength="50" class="form-control" placeholder="Enter user's name" [formControl]="nameSearchCtrl">
             <button type="button" class="btn btn-danger" (click)="searchByName()" [disabled]="nameSearchCtrl.invalid">
-                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Search by Name
-                </button>
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Search by Name
+            </button>
         </div>
         <div id="displaying-users">
             <li *ngFor="let user of displayUsers">
                 ID:{{user.userId}}, NAME:{{user.name}}, NRIC:{{user.nric}},
-                <a href="javascript:void(0);" (click)="editProfile=user"><b>Edit</b></a>
+                <a href="javascript:void(0);" (click)="editProfile=user">
+                    <b>Edit</b>
+                </a>
             </li>
         </div>
     </div>
@@ -46,7 +48,7 @@
             {{isCreateNewUser()?'Create New User':'Edit Existing User'}}
         </button>
         <button *ngIf="!isCreateNewUser()" type="button" class="btn btn-success" (click)="initEditProfile()">
-                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Clear
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Clear
         </button>
     </div>
 </div>
