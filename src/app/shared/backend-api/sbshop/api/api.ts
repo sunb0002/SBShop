@@ -1,5 +1,5 @@
-export * from './InternalApi';
-import { InternalApi } from './InternalApi';
-export * from './ProfileApi';
-import { ProfileApi } from './ProfileApi';
-export const APIS = [InternalApi, ProfileApi];
+export * from './internal.service';
+import { InternalService } from './internal.service';
+export * from './profile.service';
+import { ProfileService } from './profile.service';
+export const APIS = [InternalService, ProfileService];

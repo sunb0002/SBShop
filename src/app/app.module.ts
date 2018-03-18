@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { AuthModule } from 'app/services/auth/auth.module';
 import { APIS, BASE_PATH } from 'app/shared/backend-api/sbshop';
@@ -18,7 +18,7 @@ import { SharedModule } from './shared/shared.module';
   ],
   imports: [
     BrowserModule,
-    HttpModule,
+    HttpClientModule,
     AuthModule,
     LayoutModule,
     CommonModule,

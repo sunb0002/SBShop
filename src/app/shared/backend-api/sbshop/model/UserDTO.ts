@@ -10,13 +10,9 @@
  * Do not edit the class manually.
  */
 
-import * as models from './models';
 
 export interface UserDTO {
     name?: string;
-
     nric?: string;
-
     userId?: number;
-
 }

@@ -1,5 +1,13 @@
-swagger-codegen
 ===============
+swagger-codegen-cli v2.3.1
+
+Using latest version now, in order to make use of Angular HttpClient.
+By far I didn't see any bugs.
+
+
+===============
+swagger-codegen-cli v.2.2.3
+
 We are using swagger-codegen to auto-generate API and stubs for Angular. 
 The prerequisite for generating API and stubs is swagger JSON 
 (i.e. myord-swagger.json).

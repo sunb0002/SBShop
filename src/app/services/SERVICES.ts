@@ -1,8 +1,8 @@
-import { ProfileService } from 'app/services/profile.service';
+import { ShopProfileService } from 'app/services/profile.service';
 import { StoreConfigService } from 'app/services/store-config.service';
 
 
 export const SERVICES = [
-    ProfileService,
+    ShopProfileService,
     StoreConfigService
 ]

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
-import { ProfileService } from 'app/services/profile.service';
+import { ShopProfileService } from 'app/services/profile.service';
 import { Constants } from 'app/shared/global-constants/Constants';
 
 import { UserDTO } from './../../../shared/backend-api/sbshop/model/UserDTO';
@@ -32,7 +32,7 @@ export class ProfileComponent {
     timeOut: 2000
   };
 
-  constructor(private profileSvc: ProfileService,
+  constructor(private profileSvc: ShopProfileService,
     private notificationSvc: NotificationsService) {
     this.isDataLoading = false;
     this.initEditProfile();
@@ -70,6 +70,7 @@ export class ProfileComponent {
         data => {
           if (this.isCreateNewUser()) {
             this.initEditProfile();
+            this.displayAllUsers();
           }
           this.notificationSvc.success('Profile', 'Profile has been saved successfully.');
         },
@@ -79,7 +80,7 @@ export class ProfileComponent {
 
   private notifyError(err: Response): void {
     console.error('Error occurred: ', err);
-    this.notificationSvc.error('Profile', err.json()['msg'] || Constants.generalErrorMsg);
+    this.notificationSvc.error('Profile', Constants.generalErrorMsg);
   }
 
 }

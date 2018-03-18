@@ -10,7 +10,6 @@
  * Do not edit the class manually.
  */
 
-import * as models from './models';
 
 /**
  * Home/Internal API response
@@ -20,15 +19,12 @@ export interface HomeResponse {
      * Object containing information for success response
      */
     data?: string;
-
     /**
      * Any error or addtional message to be displayed
      */
     msg?: string;
-
     /**
      * Specific HTTP status code for API request
      */
     status: number;
-
 }

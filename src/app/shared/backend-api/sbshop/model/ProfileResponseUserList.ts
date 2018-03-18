@@ -9,8 +9,8 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { UserDTO } from './userDTO';
 
-import * as models from './models';
 
 /**
  * Profile API response: multiple users
@@ -19,16 +19,13 @@ export interface ProfileResponseUserList {
     /**
      * Object containing information for success response
      */
-    data?: Array<models.UserDTO>;
-
+    data?: Array<UserDTO>;
     /**
      * Any error or addtional message to be displayed
      */
     msg?: string;
-
     /**
      * Specific HTTP status code for API request
      */
     status: number;
-
 }
