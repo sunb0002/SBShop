@@ -94,6 +94,52 @@ export class InternalService {
     }
 
     /**
+     * generateJwt
+     * Generate Jwt
+     * @param userName User name in JWT payload.
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public generateJwtUsingPOST(userName: string, observe?: 'body', reportProgress?: boolean): Observable<HomeResponse>;
+    public generateJwtUsingPOST(userName: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<HomeResponse>>;
+    public generateJwtUsingPOST(userName: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<HomeResponse>>;
+    public generateJwtUsingPOST(userName: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (userName === null || userName === undefined) {
+            throw new Error('Required parameter userName was null or undefined when calling generateJwtUsingPOST.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+        let httpContentTypeSelected:string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set("Content-Type", httpContentTypeSelected);
+        }
+
+        return this.httpClient.post<HomeResponse>(`${this.basePath}/home/generateJWT`,
+            userName,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * test403
      * Get unsuccessful message
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.

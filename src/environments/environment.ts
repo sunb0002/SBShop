@@ -7,4 +7,5 @@ const API_BASEURL = 'http://localhost:8080/springdemo';
 export const environment = {
   production: false,
   apiBaseUrl: API_BASEURL,
+  enableJwtVerificaion: true
 };

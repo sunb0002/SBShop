@@ -18,6 +18,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs/Observable';
 
+import { AdminResponse } from '../model/adminResponse';
 import { ProfileResponseUser } from '../model/profileResponseUser';
 import { ProfileResponseUserList } from '../model/profileResponseUserList';
 import { UserDTO } from '../model/userDTO';
@@ -57,6 +58,43 @@ export class ProfileService {
         return false;
     }
 
+
+    /**
+     * getAdminDetails
+     * Get admin details from jwt
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getAdminDetailsUsingGET(observe?: 'body', reportProgress?: boolean): Observable<AdminResponse>;
+    public getAdminDetailsUsingGET(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AdminResponse>>;
+    public getAdminDetailsUsingGET(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AdminResponse>>;
+    public getAdminDetailsUsingGET(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        let httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set("Accept", httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        let consumes: string[] = [
+            'application/json'
+        ];
+
+        return this.httpClient.get<AdminResponse>(`${this.basePath}/profile/admin`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
 
     /**
      * getAllUsers

@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 
+import { AdminDTO } from '../shared/backend-api/sbshop';
 import { ProfileService } from '../shared/backend-api/sbshop/api/api';
 import { UserDTO } from './../shared/backend-api/sbshop/model/UserDTO';
 
 @Injectable()
 export class ShopProfileService {
 
+  public admin: AdminDTO;
   public allUsers: Array<UserDTO> = [];
 
   constructor(private profileApiSvc: ProfileService) { }
@@ -32,6 +34,11 @@ export class ShopProfileService {
     return this.profileApiSvc.saveUserProfileUsingPOST(dto)
       .do(resp => console.log('This profile has been updated: ', resp.data))
       .flatMap(() => this.getAllUsers());
+  }
+
+  getAdminProfile(): Observable<AdminDTO> {
+    return this.profileApiSvc.getAdminDetailsUsingGET().map(resp => resp.data)
+      .do(data => this.admin = data as AdminDTO);
   }
 
 }
