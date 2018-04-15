@@ -146,17 +146,20 @@
     <script>
 
         $('button#login').click(function () {
+
+            var apiBase = window.location.protocol + '//' + window.location.hostname + ':8080';
             var name = $('#username').val();
 
             $.ajaxSetup({
                 contentType: "application/json; charset=utf-8"
             });
-            
-            $.post("http://localhost:8080/springdemo/home/generateJWT", name, function (resp) {
+
+            $.post(apiBase + "/springdemo/home/generateJWT", name, function (resp) {
                 console.log('Response: ', resp);
                 var jwtToken = resp['data'];
                 sessionStorage.setItem('jwtBridgeStorage', jwtToken);
                 window.confirm("JWT token: " + jwtToken + " has been stored to browser session storage.");
+                window.location.href = window.location.origin;
             });
         });
 

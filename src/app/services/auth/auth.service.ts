@@ -1,5 +1,7 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
+import { catchError } from 'rxjs/operators/catchError';
 
 import { ShopProfileService } from '../profile.service';
 import { StoreConfigService } from '../store-config.service';
@@ -25,19 +27,21 @@ export class AuthService {
   public doJwtValidation(): Observable<any> {
 
     if (!this.enableJwtVerification) {
-      return Observable.of(true);
+      return of(true);
     }
 
     const jwtToken = this.storeConfigSvc.getJwtTokenFromBrowser();
     if (!jwtToken) {
       this.storeConfigSvc.failJwtValidation('No Jwt token available in storage.');
-      return Observable.of(false);
+      return of(false);
     }
 
-    return this.shopProfileSvc.getAdminProfile().catch(ex => {
-      this.storeConfigSvc.failJwtValidation(ex);
-      return Observable.of(false);
-    });
+    return this.shopProfileSvc.getAdminProfile().pipe(
+      catchError(ex => {
+        this.storeConfigSvc.failJwtValidation(ex);
+        return of(false);
+      })
+    );
   }
 
 

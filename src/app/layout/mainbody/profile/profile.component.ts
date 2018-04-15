@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NotificationsService } from 'angular2-notifications';
 import { ShopProfileService } from 'app/services/profile.service';
 import { Constants } from 'app/shared/global-constants/Constants';
+import { finalize } from 'rxjs/operators/finalize';
 
 import { UserDTO } from './../../../shared/backend-api/sbshop/model/UserDTO';
 
@@ -64,18 +65,18 @@ export class ProfileComponent {
 
   updateEditUser(): void {
     this.isDataLoading = true;
-    this.profileSvc.updateUser(this.editProfile)
-      .finally(() => this.isDataLoading = false)
-      .subscribe(
-        data => {
-          if (this.isCreateNewUser()) {
-            this.initEditProfile();
-            this.displayAllUsers();
-          }
-          this.notificationSvc.success('Profile', 'Profile has been saved successfully.');
-        },
-        error => this.notifyError(error)
-      );
+    this.profileSvc.updateUser(this.editProfile).pipe(
+      finalize(() => this.isDataLoading = false)
+    ).subscribe(
+      data => {
+        if (this.isCreateNewUser()) {
+          this.initEditProfile();
+          this.displayAllUsers();
+        }
+        this.notificationSvc.success('Profile', 'Profile has been saved successfully.');
+      },
+      error => this.notifyError(error)
+    );
   }
 
   private notifyError(err: Response): void {
