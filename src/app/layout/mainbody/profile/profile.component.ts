@@ -27,13 +27,13 @@ export class ProfileComponent {
     nricCtrl: this.nricCtrl,
   });
 
-  private notificationOptions = {
+  public notificationOptions = {
     position: ['middle', 'right'],
     lastOnBottom: false,
     timeOut: 2000
   };
 
-  constructor(private profileSvc: ShopProfileService,
+  constructor(public profileSvc: ShopProfileService,
     private notificationSvc: NotificationsService) {
     this.isDataLoading = false;
     this.initEditProfile();

@@ -9,7 +9,7 @@ import { ShopProfileService } from '../../services/profile.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private shopProfileSvc: ShopProfileService) { }
+  constructor(public shopProfileSvc: ShopProfileService) { }
 
   ngOnInit() {
   }
