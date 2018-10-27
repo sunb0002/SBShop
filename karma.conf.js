@@ -4,8 +4,9 @@
 module.exports = function (config) {
   config.set({
     basePath: '',
-    frameworks: ['jasmine', '@angular/cli'],
+    frameworks: ['parallel', 'jasmine', '@angular/cli'],
     plugins: [
+      require('karma-parallel'),
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
@@ -18,6 +19,10 @@ module.exports = function (config) {
     files: [
       { pattern: './src/test.ts', watched: false }
     ],
+    parallelOptions: {
+      executors: 4,
+      shardStrategy: 'round-robin'
+    },
     preprocessors: {
       './src/test.ts': ['@angular/cli']
     },
